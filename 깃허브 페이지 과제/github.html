@@ -3,9 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>깃허브 페이지 만들기</title>
+    <title>Github</title>
+    <link rel="icon" href="favicon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #24292e;
+            padding: 10px 20px;
+            color: #fff;
+        }
+        .menu-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .main-menu {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-menu li {
+            margin-right: 10px; 
+            color: #fff;
+            text-decoration: none;
+
+        }.main-menu li a {
+             color: #fff; /* 원하는 색상으로 변경 */
+        }
+        .side-menu {
+            display: flex;
+        }
+        .side-menu .sign-in {
+            background-color: transparent;
+        }
+        .side-menu .sign-in:hover {
+            background-color: #fff;
+            color: black;
+        }
+        .side-menu .sign-up {
+            background-color: transparent;
+        }
+        .side-menu .sign-up:hover {
+            background-color: #fff;
+            color: black;
+        }
+        .High {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        
+        .mid-section {
+            max-width: 910px;
+            margin: 0 auto;
+            padding: 50px;
+            display: flex;
+            justify-content: space-between;
+            background-image: url('./back.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .middle {
+            margin-top: 100px;
+            margin-right: 50px;
+            flex: 1;
+        }
+        .middle h1 {
+            font-size: 3em;
+            color: white;
+        }
+        .middle p {
+            color: white;
+            font-size: 1rem;
+        }
+        .middle a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .middle a:hover {
+            text-decoration: underline;
+        }
+        .form-mid-section {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(27, 31, 35, .12);
+            width: 450px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+
+            width: 96%;
+            padding: 8px;
+            border: 1px solid #e1e4e8;
+            border-radius: 4px;
+            transition: background-color 0.15s ease-in-out;
+            background-color: #ffffff;
+        }
+        .footer {
+            position: absolute;
+            right: 20px;
+            bottom: 0px;
+            height: 35%;
+            z-index: 10;
+            }     
+    </style>
 </head>
 <body>
-    
+    <header class="section">
+        <div class="High" style="display: flex;">
+            <div class="menu-group">
+                <ul class="main-menu">
+                    <li><a href="#"><img src="./logo.svg" alt="Icon">Why GitHub?</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">Enterprise</a></li>
+                    <li><a href="#">Explore</a></li>
+                    <li><a href="#">MarketPlace</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+            <div class="side-menu">
+                <input type="text" id="search" placeholder="Search GitHub">
+                <a href="#" class="sign-in">Sign in</a>
+                <a href="#" class="sign-up">Sign up</a>
+            </div>
+        </div>
+    </header>
+    <div class="mid-section">
+        <div class="middle">
+            <h1>Built for developers</h1>
+            <p>GitHub is a development platform inspired by the way you work. From
+                <a href="#">open source</a> to <a href="#">business</a>,
+                you can host and review code, manage projects, and build software alongside 50 million developers.
+            </p>
+        </div>
+        <div class="form-mid-section">
+            <form>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <p class="password-tip">Make sure it's at least 15 characters OR at least 8 characters including a
+                        number and a lowercase letter. <a href="#">Learn more</a>.</p>
+                </div>
+                <button type="submit">Sign up for GitHub</button>
+            </form>
+            <p class="terms">By clicking "Sign up for GitHub", you agree to our <a href="#">Terms of Service</a> and <a
+                    href="#">Privacy Statement</a>. We’ll occasionally send you account-related emails.</p>
+        </div>
+        </div><img class="footer" src="footer.png" alt="우주">
+
 </body>
 </html>
