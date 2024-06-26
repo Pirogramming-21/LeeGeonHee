@@ -214,7 +214,9 @@
                 #search > form:hover {
                     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12);
                 }
+            
                 #search-svg {
+                    position: relative;
                     display: inline-flex;
                     justify-content: center;
                     align-items: center;
@@ -223,6 +225,19 @@
                     height: 100%;
                     padding-left: 10px;
 
+                }
+                #search-svg::after {
+                    display: none;
+                }
+                #search > form:focus-within #search-svg::after {
+                    position: absolute;
+                    right:0;
+                    content: "";
+                    width: 1px;
+                    height: 20px;
+                    background-color: #e4e4e4;
+                    top: 20px;
+                    display: inline-block;
                 }
                 #search-svg svg {
                     width: 24px;
