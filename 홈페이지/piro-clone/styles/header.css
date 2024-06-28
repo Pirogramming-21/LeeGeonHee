@@ -40,7 +40,7 @@ main {
     text-decoration: none;
 }
 .selected-nav1 {
-    color: var(--green);
+    color: var(--green) !important ;
     text-decoration: none;
 }
 
