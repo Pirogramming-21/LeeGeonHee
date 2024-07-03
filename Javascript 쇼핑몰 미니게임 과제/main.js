@@ -30,7 +30,6 @@ function onButtonClick(event, items) {
         const dataset = event.target.dataset;
         const key = dataset.key;
         const value = dataset.value;
-
         if (key == null || value == null) {
             return;
         }
