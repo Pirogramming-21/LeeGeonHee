@@ -58,6 +58,7 @@ function endGame(isWin) {
     resultImg.src = isWin ? 'success.png':'fail.png';
     document.querySelector('.submit-buton').disabled = true;
 }
+// 1씩 감소하는거 구현
 
 function initializeGame() {
     attempts = 9;
