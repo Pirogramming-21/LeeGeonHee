@@ -86,4 +86,8 @@ body{
     font-size: 16px;
     color: #888;
 }
+.btn-selected-clear {
+    border: none;
+    cursor: pointer;
+}   
     
