@@ -4,7 +4,6 @@ const stopBtn = document.querySelector('.btn-stop');
 const resetBtn = document.querySelector('.btn-reset');
 const recordList = document.getElementById('record-list');
 const clearRecordsBtn = document.querySelector('.btn-clear-records');
-const selectedClearBtn= document.querySelector('.btn-selected-clear')
 
 let milliseconds = 0;
 let timer;
@@ -46,7 +45,7 @@ function updateDisplay() {
 function addRecord(){
     recordCount++;
     const li = document.createElement('li');
-    li.innerHTML = `<input type="checkbox" class="record-checkbox"> ${recordCount}. ${time.textContent}`;
+    li.textContent = `${recordCount}. ${time.textContent}`;
     recordList.appendChild(li);
 }
 
@@ -54,11 +53,6 @@ function clearRecords() {
     recordList.innerHTML = '';
     recordCount = 0;
 }
-
-function clearSelectedRecords() {
-    
-}
-
 
 startBtn.addEventListener('click', start);
 stopBtn.addEventListener('click', stop);
