@@ -4,6 +4,7 @@ const stopBtn = document.querySelector('.btn-stop');
 const resetBtn = document.querySelector('.btn-reset');
 const recordList = document.getElementById('record-list');
 const clearRecordsBtn = document.querySelector('.btn-clear-records');
+const selectAllCheckbox = document.getElementById('select-all-checkbox');
 
 let milliseconds = 0;
 let timer;
@@ -45,7 +46,7 @@ function updateDisplay() {
 function addRecord(){
     recordCount++;
     const li = document.createElement('li');
-    li.textContent = `${recordCount}. ${time.textContent}`;
+    li.innerHTML = `<input type="checkbox" class='record-checkbox'> ${recordCount}. ${time.textContent}`;
     recordList.appendChild(li);
 }
 
@@ -54,9 +55,37 @@ function clearRecords() {
     recordCount = 0;
 }
 
+function clearSelectedRecords() {
+    const checkboxes = document.querySelectorAll('.record-checkbox');
+    let removedCount = 0;
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            checkbox.parentElement.remove();
+            removedCount++;
+        } else if (removedCount > 0) {
+            const newNumber = index + 1 - removedCount;
+            const textContent = checkbox.parentElement.textContent.split('. ')[1];
+            checkbox.parentElement.innerHTML = `<input type="checkbox" class="record-checkbox"> ${newNumber}. ${textContent}`;
+        }
+    });
+    recordCount -= removedCount;
+    selectAllCheckbox.checked = false;
+}
+
+function toggleSelectAll() {
+    const checkboxes = document.querySelectorAll('.record-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = selectAllCheckbox.checked;
+    });
+}
+
+
+
 startBtn.addEventListener('click', start);
 stopBtn.addEventListener('click', stop);
 resetBtn.addEventListener('click', reset);
-clearRecordsBtn.addEventListener('click', clearRecords);
+selectAllCheckbox.addEventListener('change', toggleSelectAll);
+clearRecordsBtn.addEventListener('click', clearSelectedRecords);
+
 
 updateDisplay();
