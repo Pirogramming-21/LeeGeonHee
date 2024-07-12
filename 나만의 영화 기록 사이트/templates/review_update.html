@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Moive Reviews</title>
+</head>
+<body>
+    <h1> 리뷰 작성/수정 </h1>
+
+<form action="/review/{{review.id}}/update" method="post">
+    {% csrf_token %}
+    <input name="title" placeholder="제목" value="{{review.title}}" /> <br/>
+    <input name="year" placeholder="개봉년도" value="{{review.year}}" /> <br/>
+    <input name="genre" placeholder="장르" value="{{review.genre}}"/> <br/>
+    <input name="rating" placeholder="별점" value="{{review.rating}}"/> <br/>
+    <input name="running_time" placeholder="러닝타임" value="{{review.running_time}}"/> <br/>
+    <textarea name="content" cols="30" rows="10" placeholder="내용">{{review.content}}</textarea><br/>
+    <input name="director" placeholder="감독" value="{{review.director}}" /> <br/>
+    <input name="actors" placeholder="배우" value="{{review.actors}}"/> <br/>
+    <div>
+        <input type="submit" value="Save">
+    </div>
+</form>
+</body>
+</html>

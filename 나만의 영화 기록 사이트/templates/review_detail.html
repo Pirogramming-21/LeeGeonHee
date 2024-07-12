@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Moive reviews</title>
+</head>
+<body>
+    <h1>{{ review.title }}</h1>
+    <p>개봉년도: {{ review.year }}</p>
+    <p>감독: {{ review.director }}</p>
+    <p>주연: {{ review.actors }}</p>
+    <p>장르: {{ review.genre }}</p>
+    <p>별점: {{ review.rating }}</p>
+    <p>러닝타임: {{ review.running_time }}분</p>
+    <p>리뷰 내용: {{ review.content }}</p>
+    <a href="/review/review_list">MyMovieReviews</a>
+    <a href="/review/{{review.id}}/update">수정</a>
+
+    <form action="/review/{{review.id}}/delete" method="post">
+        {% csrf_token %}
+        <input type="submit" value="삭제하기">
+    </form>
+    
+</body>
+</html>
