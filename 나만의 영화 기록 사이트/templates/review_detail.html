@@ -1,24 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>My Moive reviews</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Movie Reviews</title>
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #e50914;
+        }
+        header a {
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+        .container-top {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid;
+            background-color: lightgray;
+            border-radius: 10px;
+            position: relative;
+        }
+        .content_box {
+            padding: 20px;
+            border: 2px solid;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .top-right  {
+            display: flex;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        a {
+            display: inline-block;
+            text-decoration: none;
+        }
+        .top-right a, .top-right input[type="submit"] {
+            margin-right: 10px;
+            text-decoration: none;
+            background-color: #d9534f;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .top-right input[type="submit"]:hover {
+            background-color: #c9302c;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ review.title }}</h1>
-    <p>개봉년도: {{ review.year }}</p>
-    <p>감독: {{ review.director }}</p>
-    <p>주연: {{ review.actors }}</p>
-    <p>장르: {{ review.genre }}</p>
-    <p>별점: {{ review.rating }}</p>
-    <p>러닝타임: {{ review.running_time }}분</p>
-    <p>리뷰 내용: {{ review.content }}</p>
-    <a href="/review/review_list">MyMovieReviews</a>
-    <a href="/review/{{review.id}}/update">수정</a>
+    <div class="container">
+        <header>
+            <h1>my Movie reviews</h1>
+            <a href="/review/create">Add a New Review</a>
+        </header>
+        <div class="container-top">
+            <div class="top-right">
+                <a href="/review/{{review.id}}/update">수정</a>
+                <form action="/review/{{review.id}}/delete" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="삭제하기">
+                </form>
+            </div>
+            <h1>{{ review.title }}</h1>
+            <p>개봉년도: {{ review.year }}</p>
+            <p>감독: {{ review.director }}</p>
+            <p>주연: {{ review.actors }}</p>
+            <p>장르: {{ review.genre }}</p>
+            <p>별점: {{ review.rating }}</p>
+            <p>러닝타임: {{ review.running_time }}분</p>
+        </div>
+        <div class="content_box">
+            <p>리뷰 내용: {{ review.content }}</p>
+        </div>
+        <a href="/review/review_list">MyMovieReviews</a>
 
-    <form action="/review/{{review.id}}/delete" method="post">
-        {% csrf_token %}
-        <input type="submit" value="삭제하기">
-    </form>
-    
-</body>
+            
+    </body>
 </html>

@@ -21,7 +21,10 @@ def review_create(request):
             actors=request.POST['actors'],
         )
         return redirect("/review")
-    return render(request, 'review_create.html')
+    context = {
+        'genre_choices': Review.GENRE_CHOICES
+    }
+    return render(request, 'review_create.html', context)
 
 def review_detail(request, pk) :
     review = Review.objects.get(id=pk)
