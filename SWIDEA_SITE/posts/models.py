@@ -1,4 +1,6 @@
 from django.db import models
+from developtool.models import devtools
+from member.models import Member
 
 # Create your models here.
 class Post(models.Model):
@@ -6,8 +8,9 @@ class Post(models.Model):
     image = models.ImageField('이미지', blank=True, upload_to='posts/%Y%m%d')
     content = models.CharField('아이디어 설명', max_length=60)
     interest = models.IntegerField('아이디어 관심도', default=0)
-    devtool = models.CharField('예상 개발툴', max_length=24)
-    # 생성 시각, 수정 시각
-    created_date = models.DateTimeField('작성일', auto_created=True, auto_now_add=True)
-    updated_date = models.DateTimeField('수정일', auto_created=True, auto_now=True)
+    devtool = models.ForeignKey(devtools, on_delete=models.SET_NULL, verbose_name='예상 개발툴', null=True, blank=True)
+    user = models.ForeignKey(Member, on_delete=models.CASCADE, verbose_name='작성자', null=True)
+    created_date = models.DateTimeField('작성일', auto_now_add=True)
+    def __str__(self):
+        return self.name 
 

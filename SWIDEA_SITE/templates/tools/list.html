@@ -13,7 +13,7 @@
         <!-- 글 목록 -->
         {% for tool in tools %}
         <div class="dev-item">
-            <div class="info">
+            <div class="info_t">
                 <a href="{% url 'tools:detail' tool.pk %}" class="title">
                     {{ tool.name }}
                 </a>

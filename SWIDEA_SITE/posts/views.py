@@ -1,6 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
 from .forms import PostForm
+from django.core.paginator import Paginator
+from django.db.models import Case, When, BooleanField
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
 # Create your views here.
 def main(req):
     posts = Post.objects.all()
@@ -21,8 +27,8 @@ def create(req):
     return redirect('posts:main')
 
 def detail(req, pk):
-    post = Post.objects.get(id=pk)
-    ctx = {'post':post}
+    post = Post.objects.select_related('devtool').get(id=pk)
+    ctx = {'post':post, 'pk':pk}
     return render(req, 'posts/detail.html', ctx)
 
 def delete(req, pk):
@@ -39,3 +45,46 @@ def update(req, pk):
     if form.is_valid():
         form.save()
     return redirect('posts:detail',pk)
+
+def post_list(req):   
+    sort_option = req.GET.get('sort', 'created')  
+    if sort_option == 'likes':
+        ideas = Post.objects.annotate(
+            is_starred=Case(
+                When(starred=True, then=True),
+                default=False,
+                output_field=BooleanField()
+            )
+        ).order_by('-is_starred', 'created_at')
+    elif sort_option == 'name':
+        ideas = Post.objects.all().order_by('name')  
+    elif sort_option == 'updated':
+        ideas = Post.objects.all().order_by('-updated_at')  
+    else:
+        ideas = Post.objects.all().order_by('created_at')  
+
+    paginator = Paginator(ideas, 4)  # 한 페이지당 4개의 아이디어
+    page_number = req.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    ctx = {
+        'ideas': page_obj,
+        'page_obj': page_obj,
+        'sort_option': sort_option
+    }
+
+    return render(req, 'posts/list.html', ctx)
+
+
+
+@require_POST
+@csrf_exempt
+def change_interest(request, post_id):
+    try:
+        post = Post.objects.get(pk=post_id)
+        delta = int(request.POST.get('delta'))
+        post.interest = max(0, post.interest + delta)
+        post.save()
+        return JsonResponse({'success': True, 'new_interest': post.interest})
+    except Post.DoesNotExist:
+        return JsonResponse({'success': False})

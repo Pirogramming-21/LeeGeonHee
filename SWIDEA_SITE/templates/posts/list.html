@@ -3,12 +3,39 @@
 
 {% block head %}
     <title>My SW Idea Manage</title>
+    <style>
+        .idea-item {
+            position: relative;
+        }
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
 
 {%block content%}
 <main>
     <h1>Idea List</h1>
     <p>나의 아이디어를 잊지말고 기록해보세요</p>
+    <div class="sort">
+        <form method="get" action="{% url 'posts:main' %}" class="d-inline-flex"></form>
+            <select class="form-control">
+                <option value="nothing">--정렬기준--</option>
+                <option value="likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>찜한 순</option>
+                <option value="name" {% if request.GET.sort == 'name' %}selected{% endif %}>이름순</option>
+                <option value="created" {% if request.GET.sort == 'created' %}selected{% endif %}>등록순</option>
+                <option value="updated" {% if request.GET.sort == 'updated' %}selected{% endif %}>최신순</option>
+            </select>
+        </form>
+    </div>
+    
+
     <div class="idea_list">
         <!-- 글 목록 -->
         {% for post in posts %}
@@ -18,15 +45,31 @@
                 {% else %}
                     <img src="{% static 'posts/image/no_img.png' %}" alt="">
                 {% endif %}
+                <button class="favorite-btn" onclick="toggleFavorite(this)">🤍</button>
                 <div class="info">
                 <a href="{% url 'posts:detail' post.pk%}" class="title">
                     {{post.title}}
                 </a>
                 <p>예상 개발 툴: {{post.devtool}}</p>
-                <p>아이디어 관심도: {{post.interest}}</p>
+                <p>
+                    아이디어 관심도: 
+                        <button class="minus-btn" data-post-id="{{ post.pk }}">-</button>
+                        <span class="interest-count" id="interest-count-{{ post.pk }}">{{ post.interest }}</span>
+                        <button class="plus-btn" data-post-id="{{ post.pk }}">+</button>
+                </p>
                 </div>
             </div>
         {% endfor %}
     </div>
 </main>
-{%endblock%}
+<script>
+    function toggleFavorite(button) {
+        if (button.innerHTML === '🤍') {
+            button.innerHTML = '❤️';
+        } else {
+            button.innerHTML = '🤍';
+        }
+    }
+
+</script>
+{% endblock %}

@@ -9,4 +9,5 @@ urlpatterns = [
     path('detail/<int:pk>/', detail, name='detail'),
     path('delete/<int:pk>/', delete, name='delete'),
     path('update/<int:pk>/', update, name='update'),
+    path('update_interest/<int:pk>/', change_interest, name='update_interest'),
 ]

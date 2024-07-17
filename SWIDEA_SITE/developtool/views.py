@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from posts.models import Post
 from .models import devtools
 from .forms import devtoolsForm
 # Create your views here.
@@ -10,7 +11,7 @@ def list(req):
 def create(req):
     if req.method == 'GET':
         form = devtoolsForm()
-        ctx = { 'form' : form}
+        ctx = {'form' : form}
         return render(req, 'tools/create.html', ctx)
     form = devtoolsForm(req.POST)
     if form.is_valid():
@@ -25,11 +26,15 @@ def update(req,pk):
     tool = devtools.objects.get(id=pk)
     if req.method == 'GET':
         form = devtoolsForm(instance=tool)
-        ctx = {'form' : form}
-        return render(req,'tools/update.html', ctx)
+        ctx = {'form' : form, 'pk':pk}
+        return render(req, 'tools/update.html', ctx)
     
     form = devtoolsForm(req.POST, instance=tool)
-    return redirect('tools:list')
+    if form.is_valid():
+        form.save()
+        return redirect('tools:list')
+    ctx = {'form': form, 'pk': pk}
+    return render(req, 'tools/update.html', ctx)
 
 def detail(req, pk):
     tool = devtools.objects.get(id=pk)

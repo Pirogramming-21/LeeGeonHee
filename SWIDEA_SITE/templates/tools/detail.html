@@ -12,8 +12,18 @@
     <div class="dev-card">
         <div class="dev-info">
             <h2>{{ tool.title }}</h2>
-            <p>{{ tool.kind }}</p>
-            <p>{{ tool.content }}</p>
+            <p>개발툴 종류 : {{ tool.kind }}</p>
+            <p>개발툴 설명 : {{ tool.content }}</p>
+            <p>만들 수 있는 SW 목록</p>
+            {% if posts %}
+                <ul>
+                    {% for post in posts %}
+                        <li><a href="{% url 'posts:detail' post.title.pk %}">{{ post.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>등록된 소프트웨어가 없습니다.</p>
+            {% endif %}
         </div>
     </div>
     <div class="button-group">

@@ -16,7 +16,13 @@
         <div class="idea-info">
             <h2>{{ post.title }}</h2>
             <p>1 아이디어 관심도: {{ post.interest }}</p>
-            <p>2 예상 개발 툴: {{ post.devtool }}</p>
+            <p>2 예상 개발툴:
+                {% if post.devtool and post.devtool.pk %}
+                    <a href="{% url 'tools:detail' post.devtool.pk %}">{{ post.devtool }}</a>
+                {% else %}
+                    None
+                {% endif %}
+            </p>
             <p>3 아이디어 설명: {{ post.content }}</p>
         </div>
     </div>
@@ -29,4 +35,5 @@
         </form>
     </div>
 </main>
+
 {% endblock %}
