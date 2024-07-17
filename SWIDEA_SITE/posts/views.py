@@ -8,14 +8,27 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
 # Create your views here.
-def main(req):
-    posts = Post.objects.all()
-    print("Number of posts:", len(posts))
-    ctx = {
-        'posts' : posts
-    }
-    return render(req, 'posts/list.html', ctx)
+def main(request):
+    sort_option = request.GET.get('sort', 'created')
+    if sort_option == 'likes':
+        posts = Post.objects.all().order_by('-interest', '-created_at')
+    elif sort_option == 'name':
+        posts = Post.objects.all().order_by('title')
+    elif sort_option == 'updated':
+        posts = Post.objects.all().order_by('-updated_at')
+    else:  # 'created' or default
+        posts = Post.objects.all().order_by('-created_at')
 
+    paginator = Paginator(posts, 8)  # 한 페이지당 8개의 아이디어
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    ctx = {
+        'posts': page_obj,
+        'page_obj': page_obj,
+        'sort_option': sort_option
+    }
+    return render(request, 'posts/list.html', ctx)
 def create(req):
     if req.method == 'GET':
         form = PostForm()
@@ -79,12 +92,14 @@ def post_list(req):
 
 @require_POST
 @csrf_exempt
-def change_interest(request, post_id):
+def update_interest(request, pk, action):
     try:
-        post = Post.objects.get(pk=post_id)
-        delta = int(request.POST.get('delta'))
-        post.interest = max(0, post.interest + delta)
+        post = Post.objects.get(pk=pk)
+        if action == 'increase':
+            post.interest += 1
+        elif action == 'decrease':
+            post.interest = max(0, post.interest - 1)
         post.save()
         return JsonResponse({'success': True, 'new_interest': post.interest})
     except Post.DoesNotExist:
-        return JsonResponse({'success': False})
+        return JsonResponse({'success': False, 'error': 'Post not found'}, status=404)
