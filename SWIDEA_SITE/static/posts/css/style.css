@@ -1,0 +1,224 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: white;
+}
+
+header .logo {
+    font-size: 1.5em;
+}
+
+header .logo .highlight {
+    color: #00ff00; /* Highlight 색상 (녹색) */
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.idea_list {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 2px solid gray;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: lightgray;
+    gap: 20px;
+}
+
+.idea-item {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.idea-item img {
+    width: 100px;
+    height: auto;
+}
+
+.idea-item p {
+    margin: 5px 0;
+}
+
+.idea-item .title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    text-decoration: none;
+}
+.idea-item .info {
+    padding: 10px;
+}
+.idea-item .title:hover {
+    text-decoration: underline;
+}
+
+main {
+    text-align: center;
+    padding: 20px;
+}
+
+.idea-detail {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: lightgray;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+.idea-card {
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    margin-top: 20px;
+}
+
+.logos {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logos img {
+    width: 200px;
+    height: auto;
+    margin: 0 10px;
+}
+
+.idea-detail p {
+    margin: 10px 0;
+}
+
+.idea-info {
+    flex: 1;
+}
+
+.idea-info h2 {
+    color: #4CAF50;
+    margin-top: 0;
+}
+
+.idea-info p {
+    padding-left: 20px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #808080;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #2196F3;
+    color: white;
+}
+
+.devtool-list {
+    margin-top: 20px;
+}
+
+.dev-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: lightgray;
+    transition: background-color 0.3s;
+}
+
+.dev-item:hover {
+    background-color: #f1f1f1;
+}
+
+.info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.title {
+    font-size: 1.5em;
+    color: #333;
+    text-decoration: none;
+}
+
+.title:hover {
+    color: #4CAF50;
+}
+
+.type {
+    font-size: 1.2em;
+    color: white;
+    margin: 5px 0;
+    padding-left: 20px;
+}
+
+.content {
+    padding-left: 30px;
+    font-size: 1em;
+    color: black;
+}

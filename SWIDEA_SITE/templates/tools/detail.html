@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>Idea Detail</title>
+{% endblock %}
+
+{% block content %}
+<main class="dev-detail">
+    <h1>DevTool Detail</h1>
+    <p>개발툴 세부내용 페이지 입니다. 자신이 다룰 수 있는 개발툴에 대한 상세내용을 확인해 보아요.</p>
+    <div class="dev-card">
+        <div class="dev-info">
+            <h2>{{ tool.title }}</h2>
+            <p>{{ tool.kind }}</p>
+            <p>{{ tool.content }}</p>
+        </div>
+    </div>
+    <div class="button-group">
+        <form action="{% url 'tools:delete' tool.pk %}" method="POST">
+            {%csrf_token%}
+            <button type="submit" class="btn btn-danger">삭제하기</button>
+            <a href="{% url 'tools:list' %}" class="btn btn-secondary">목록</a>
+            <a href="{% url 'tools:update' tool.pk %}" class="btn btn-primary">수정</a>
+        </form>
+    </div>
+</main>
+{% endblock %}

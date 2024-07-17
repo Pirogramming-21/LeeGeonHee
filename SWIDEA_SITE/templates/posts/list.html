@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+    <title>My SW Idea Manage</title>
+{% endblock %}
+
+{%block content%}
+<main>
+    <h1>Idea List</h1>
+    <p>나의 아이디어를 잊지말고 기록해보세요</p>
+    <div class="idea_list">
+        <!-- 글 목록 -->
+        {% for post in posts %}
+            <div class="idea-item">
+                {% if post.image.url != null and post.image.url != '' %}
+                    <img src="{{ post.image.url }}" alt="대체텍스트">
+                {% else %}
+                    <img src="{% static 'posts/image/no_img.png' %}" alt="">
+                {% endif %}
+                <div class="info">
+                <a href="{% url 'posts:detail' post.pk%}" class="title">
+                    {{post.title}}
+                </a>
+                <p>예상 개발 툴: {{post.devtool}}</p>
+                <p>아이디어 관심도: {{post.interest}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{%endblock%}
