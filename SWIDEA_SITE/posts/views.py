@@ -36,7 +36,9 @@ def create(req):
         return render(req, 'posts/create.html', ctx)
     form = PostForm(req.POST, req.FILES)
     if form.is_valid():
-        form.save()
+        post = form.save(commit=False)  
+        post.user = req.user
+        post.save()
     return redirect('posts:main')
 
 def detail(req, pk):
