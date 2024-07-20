@@ -13,7 +13,7 @@
                     {% endif %}
                 </div>
                 <div class="card-text">{{ board.content }}</div>
-                <div class="btn btn-primary board__like">Likes: {{ board.like }}</div>
+                <div class="btn btn-primary board__like" onclick="onClickLike({{board.id}}, 'like')">Likes: {{ board.like }}</div>
                 <div class="card-date">{{ board.create_date }}</div>
             </div>
         </div>
@@ -22,4 +22,31 @@
     </div>
 {% endblock %}
 
+{% block extra %}
+<script>
+    const requestLike = new XMLHttpRequest();
+    const onClickLike = (id) => {
+        const url = '/like_ajax/';
+        requestLike.open('POST', url, true);
+        requestLike.setRequestHeader(
+            'Content-Type',
+            'application/x-www-form-urlencoded'
+        );
+        requestLike.send(JSON.stringify({id:id}));
+    }
+    requestLike.onreadystatechange = () => {
+        if(requestLike.readyState === XMLHttpRequest.DONE) {
+            if (requestLike.status < 400) {
+                const {id} = JSON.parse(requestLike.response);
+                const element = document.querySelector(`.board-id-${id} .board__like`);
+                const originHTML = element.innerHTML;
+                const [buttonType, num] = originHTML.split(" ");
+                const count = Number(num)  + 1;
 
+                element.innerHTML = `Likes ${count}`;
+            }
+        }
+    }
+</script>
+    
+{% endblock %}
