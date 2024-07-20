@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="board-grid">
+        {% for board in boards %}
+        <div class="card board__container board-id-{{ board.id }}">
+            <div class="card-body">
+                <div class="board__img">
+                    {% if board.image %}
+                    <img src="{{ board.image.url }}" alt="Board Image">
+                    {% endif %}
+                </div>
+                <div class="card-text">{{ board.content }}</div>
+                <div class="btn btn-primary board__like">Likes: {{ board.like }}</div>
+                <div class="card-date">{{ board.create_date }}</div>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+

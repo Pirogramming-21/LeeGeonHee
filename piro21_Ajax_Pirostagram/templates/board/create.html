@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container">
+    <div class="create-post">
+        <h1>새 게시물 만들기</h1>
+        <form action="{% url 'board:board_create' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.image.label_tag }}
+                {{ form.image }}
+            </div>
+            <div class="form-group">
+                {{ form.content.label_tag }}
+                {{ form.content }}
+            </div>
+            <button type="submit" class="btn-submit">게시</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

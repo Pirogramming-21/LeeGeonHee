@@ -1,0 +1,168 @@
+@import "./reset.css";
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    padding: 5px;
+}
+
+
+.header__container {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.header__text2 {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.main-container {
+    padding: 20px;
+    flex-grow: 1; /* 남은 공간을 채우도록 설정 */
+}
+
+.board-grid {
+    display: flex; 
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: calc(33.333% - 14px); /* 3분의 1 너비에서 간격 고려 */
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 10px;
+}
+.card-body:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.board__img {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.board__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-text, .board__like, .card-date {
+    margin-top: 10px;
+}
+
+footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.footer__container > div {
+    cursor: pointer;
+}
+
+.footer__item {
+    font-size: 1.5rem;
+}
+
+/* 반응형 구현 */
+@media (max-width: 992px) {
+    .card {
+        width: calc(50% - 10px); /* 2열 그리드 */
+    }
+}
+
+@media (max-width: 576px) {
+    .card {
+        width: 100%; /* 1열 그리드 */
+    }
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.create-post {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    padding: 20px;
+}
+h1 {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    font-size: 14px;
+    height: 150px;
+}
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    font-size: 14px;
+}
+.btn-submit {
+    background-color: #0095f6;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+.btn-submit2 {
+    background-color: #0095f6;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.btn-submit:hover , .btn-submit2:hover {
+    background-color: #0081d6;
+}

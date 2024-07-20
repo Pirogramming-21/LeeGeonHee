@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piroinstagram</title>
+
+    {% block extra_head %}
+    <script src="https://kit.fontawesome.com/7d6a50a6b2.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'insta.css' %}">
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <div class="header__container">
+            <div class="header__text">
+                GEON._.HHH
+            </div>
+            <div class="header__text2">
+                게시물
+            </div>
+        </div>
+        <button type="submit" class="btn-submit2"><a href="{% url 'board:board_create'%}">게시글만들기</a></button>
+    </header>
+    <div class="main__container"></div>
+        {% block content %}
+            <!-- 기본 내용 -->
+        {% endblock %}
+
+    {% block extra %}
+    {% endblock %}
+    <footer>
+        <div class="footer__container">
+            <div class="footer__item"><i class="fas fa-home"></i></div>
+            <div class="footer__item"><i class="fas fa-search"></i></div>
+            <div class="footer__item"><i class="far fa-plus-square"></i></div>
+            <div class="footer__item"><i class="far fa-heart"></i></div>
+        </div>
+    </footer>
+</body>
+</html>
