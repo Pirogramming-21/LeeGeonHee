@@ -20,5 +20,17 @@ def reply_create(req, pk):
             board = Board.objects.get(id=pk)
             reply.board = board
             reply.save()
-            return JsonResponse({'content': reply.contents}, json_dumps_params={'ensure_ascii': False})
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+            return JsonResponse({'id': reply.id, 'content': reply.contents},  json_dumps_params={'ensure_ascii': False})
+        
+@login_required
+def reply_delete(req, pk):
+    if req.method == 'POST':
+        reply = Reply.objects.get(id=pk)
+        if reply.writer == req.user:
+            reply.delete()
+            return JsonResponse({'status': 'success'}) 
+        else:
+            return JsonResponse({'error': 'Permission denied'}, status=403)
+
+
+

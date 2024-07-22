@@ -1,0 +1,22 @@
+
+{% load static %}
+
+
+<div class="container mt-4">
+    <h1>Boards by {{ user.username }}</h1>
+    <ul class="list-group">
+        {% for board in boards %}
+        <li class="list-group-item">
+            {% if board.image %}
+                <img src="{{ board.image.url }}" alt="Board Image">
+            {% endif %}
+            <p>{{ board.content }}</p>
+            <p><strong>Written by:</strong> {{ board.writer.username }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+    {% if not boards %}
+        <p>No boards found.</p>
+    {% endif %}
+</div>
+

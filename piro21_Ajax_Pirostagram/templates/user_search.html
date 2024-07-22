@@ -1,0 +1,15 @@
+{% load static %}
+
+<div class="container mt-4">
+    <h1>User Search Results</h1>
+    <ul class="list-group">
+        {% for user in users %}
+            <li class="list-group-item">
+                <a href="{% url 'board:user_boards' user.id %}">{{ user.username }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% if not users %}
+        <p>No users found.</p>
+    {% endif %}
+</div>

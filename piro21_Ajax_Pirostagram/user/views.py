@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout 
 from django.urls import reverse
+from django.db.models import Q
+from django.contrib.auth.models import User
 # Create your views here.
 def signup(req):
     if req.method == 'GET':
@@ -38,3 +40,12 @@ def login(req):
 def logout(req):
     auth_logout(req)
     return redirect('/user/login' )
+
+def user_search(req):
+    query = req.GET.get('q')
+    if query:
+        users = User.objects.filter(Q(username__icontains=query) | Q(first_name__icontains=query) | Q(last_name__icontains=query))
+    else:
+        users = User.objects.none()
+    return render(req, 'user_search.html', {'users': users})
+

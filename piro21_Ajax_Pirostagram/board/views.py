@@ -6,6 +6,9 @@ from django.http import JsonResponse
 import json
 from django.contrib.auth.decorators import login_required
 from reply.forms import ReplyForm
+from django.contrib.auth.models import User
+from django.views.decorators.http import require_GET
+from django.db.models import Q
 
 # Create your views here.
 def board_list(req):
@@ -22,6 +25,7 @@ def board_create(req):
         if form.is_valid():
             board = form.save(commit=False)
             board.like=0
+            board.writer = req.user
             board.save()
             return redirect('board:board_list') 
     else:
@@ -56,5 +60,10 @@ def board_feed(req):
     }
     return render(req, 'board/feed.html', ctx)
 
+@login_required
+def user_boards(request, pk):
+    user = User.objects.get(id=pk)
+    boards = Board.objects.filter(writer=user)
+    return render(request, 'user_boards.html', {'boards': boards, 'user': user})
 
 

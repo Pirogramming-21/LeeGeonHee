@@ -20,9 +20,14 @@
                 <button type="submit">댓글 달기</button>
             </form>
             <div id="replyList">
-            {% if board.reply_set %}
-                {% for reply in board.reply_set.all %}
-                    <p>{{reply.contents}}</p>
+                {% if board.reply_set %}
+                    {% for reply in board.reply_set.all %}
+                    <div class="reply" data-id="{{ reply.id }}">
+                        <p>{{reply.contents}}</p>
+                        {% if user == reply.writer %}
+                            <button class="deleteReply" data-id="{{ reply.id }}">삭제</button>
+                        {% endif %}
+                    </div>
                 {% endfor %}
             {% endif %}
             </div>
@@ -61,6 +66,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const replyForm = document.getElementById('replyForm');
         const replyList = document.getElementById('replyList');
+
             replyForm.addEventListener('submit', (event) => {
                 event.preventDefault();
                 
@@ -73,8 +79,13 @@
                     if (addcomment.status === 200) {
                         const response = JSON.parse(addcomment.responseText);
                         if (replyList) {
-                            const newReply = document.createElement('p');
-                            newReply.textContent = response.content;
+                            const newReply = document.createElement('div');
+                            newReply.classList.add('reply');
+                            newReply.setAttribute('data-id', response.id);
+                            newReply.innerHTML = `
+                                <p>${response.content}</p>
+                                <button class="deleteReply" data-id="${response.id}">삭제</button>
+                            `;
                             replyList.appendChild(newReply);
                             replyForm.reset();
                         } else {
@@ -87,8 +98,32 @@
                 
                 const formData = new FormData(replyForm);
                 addcomment.send(new URLSearchParams(formData));
+            }); 
+            
+            replyList.addEventListener('click', function(event) {
+                if (event.target.classList.contains('deleteReply')) {
+                    const replyId = event.target.getAttribute('data-id');
+                    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                    const deleteRequest = new XMLHttpRequest();
+                    deleteRequest.open('POST', `/reply/delete/${replyId}`, true);
+                    deleteRequest.setRequestHeader('X-CSRFToken', csrfToken);
+                    deleteRequest.setRequestHeader('Content-Type', 'application/json');
+
+                    deleteRequest.onload = function() {
+                        if (deleteRequest.status === 200) {
+                            const replyElement = document.querySelector(`.reply[data-id="${replyId}"]`);
+                            if (replyElement) {
+                                replyElement.remove();
+                            }
+                        } else {
+                            console.error('Error:', deleteRequest.status);
+                        }
+                    };
+                    deleteRequest.send();
+                }
             });
-    });
+        });
 </script>
 
 {% endblock %}

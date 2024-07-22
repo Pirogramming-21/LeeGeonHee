@@ -6,4 +6,5 @@ app_name ='reply'
 
 urlpatterns = [
     path('create/<int:pk>', views.reply_create, name='reply_create'),
+    path('delete/<int:pk>', views.reply_delete, name='reply_delete'),
 ]

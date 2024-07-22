@@ -11,6 +11,7 @@ urlpatterns = [
     path('like_ajax/', views.like_ajax, name='like_ajax'),
     path('board/detail/<int:pk>', views.board_detail, name='board_detail'),
     path('', views.board_feed, name='board_feed'),
+    path('user_boards/<int:pk>/', views.user_boards, name='user_boards'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
