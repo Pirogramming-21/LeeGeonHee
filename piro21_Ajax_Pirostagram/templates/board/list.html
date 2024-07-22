@@ -3,19 +3,24 @@
 
 {% block content %}
     <div class="main-container">
-        <div class="board-grid">
-        {% for board in boards %}
-        <div class="card board__container board-id-{{ board.id }}">
-            <a href="{% url 'board:board_detail' board.id %}">
-                <div class="card-body">
-                    <div class="board__img">
-                        {% if board.image %}
-                        <img src="{{ board.image.url }}" alt="Board Image">
-                        {% endif %}
-                    </div>
-                </div>
-            </a>
+        <div class="sort-options">
+            <a href="?sort_by=-create_date" {% if current_sort == '-create_date' %}class="active"{% endif %}>최신순</a>
+            <a href="?sort_by=like" {% if current_sort == 'like' %}class="active"{% endif %}>좋아요순</a>
+            <a href="?sort_by=reply_count" {% if current_sort == 'reply_count' %}class="active"{% endif %}>댓글 많은 순</a>
         </div>
+        <div class="board-grid">
+            {% for board in boards %}
+            <div class="card board__container board-id-{{ board.id }}">
+                <a href="{% url 'board:board_detail' board.id %}">
+                    <div class="card-body">
+                        <div class="board__img">
+                            {% if board.image %}
+                            <img src="{{ board.image.url }}" alt="Board Image">
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+            </div>
         {% endfor %}
         </div>
     </div>

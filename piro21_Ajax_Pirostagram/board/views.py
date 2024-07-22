@@ -9,14 +9,25 @@ from reply.forms import ReplyForm
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_GET
 from django.db.models import Q
-
+from django.db.models import Count
 # Create your views here.
-def board_list(req):
-    boards = Board.objects.all()
+
+
+def board_list(request):
+    sort_by = request.GET.get('sort_by', '-create_date')
+    
+    if sort_by == 'like':
+        boards = Board.objects.all().order_by('-like', '-create_date')
+    elif sort_by == 'reply_count':
+        boards = Board.objects.annotate(reply_count=Count('reply')).order_by('-reply_count', '-create_date')
+    else:
+        boards = Board.objects.all().order_by(sort_by)
+    
     ctx = {
-        'boards' : boards,
+        'boards': boards,
+        'current_sort': sort_by,
     }
-    return render(req, 'board/list.html', ctx)
+    return render(request, 'board/list.html', ctx)
 
 @login_required
 def board_create(req):
