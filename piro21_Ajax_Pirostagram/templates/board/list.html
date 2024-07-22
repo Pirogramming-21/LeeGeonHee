@@ -3,6 +3,8 @@
 
 {% block content %}
     <div class="main-container">
+        <input type="text" id="searchInput" placeholder="검색어를 입력하세요">
+        <div id="searchResults"></div>
         <div class="sort-options">
             <a href="?sort_by=-create_date" {% if current_sort == '-create_date' %}class="active"{% endif %}>최신순</a>
             <a href="?sort_by=like" {% if current_sort == 'like' %}class="active"{% endif %}>좋아요순</a>
@@ -51,6 +53,25 @@
             }
         }
     }
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const query = this.value;
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `/search_boards?q=${query}`, true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const results = JSON.parse(xhr.responseText).results;
+                const resultsContainer = document.getElementById('searchResults');
+                resultsContainer.innerHTML = '';
+                results.forEach(result => {
+                    const div = document.createElement('div');
+                    div.classList.add('search-result');
+                    div.innerHTML = `<a href="/board/${result.id}">${result.content}</a>`;
+                    resultsContainer.appendChild(div);
+                });
+            }
+        };
+        xhr.send();
+    });
 </script>
     
 {% endblock %}

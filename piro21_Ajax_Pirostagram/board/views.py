@@ -78,3 +78,12 @@ def user_boards(request, pk):
     return render(request, 'user_boards.html', {'boards': boards, 'user': user})
 
 
+def search_boards(req):
+    query = req.GET.get('q', '')
+    if query:
+        boards = Board.objects.filter(content__icontains=query)
+    else:
+        boards = Board.objects.all()
+    results = [{'id': board.id, 'content': board.content[:100]} for board in boards]
+    return JsonResponse({'results': results})
+
