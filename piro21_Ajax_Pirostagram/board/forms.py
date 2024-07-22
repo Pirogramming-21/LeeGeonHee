@@ -4,4 +4,4 @@ from board.models import Board
 class BoardForm(forms.ModelForm):
     class Meta:
         model = Board
-        fields = ['image', 'content', 'like']
+        fields = ['image', 'content']

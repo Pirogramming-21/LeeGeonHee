@@ -18,6 +18,11 @@ header {
     font-size: 1rem;
     text-align: center;
 }
+.header__contain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .header__text2 {
     font-weight: bold;
@@ -166,3 +171,11 @@ a {
 .btn-submit:hover , .btn-submit2:hover {
     background-color: #0081d6;
 }
+.icon-link {
+    text-decoration: none; 
+    color: inherit;        
+}
+
+.icon-link:hover {
+    color: inherit;
+}    

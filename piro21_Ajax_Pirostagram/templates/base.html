@@ -25,7 +25,6 @@
                 게시물
             </div>
         </div>
-        <button type="submit" class="btn-submit2"><a href="{% url 'board:board_create'%}">게시글만들기</a></button>
     </header>
     <div class="main__container"></div>
         {% block content %}
@@ -36,10 +35,18 @@
     {% endblock %}
     <footer>
         <div class="footer__container">
-            <div class="footer__item"><i class="fas fa-home"></i></div>
+            <div class="footer__item">
+                <a href="{% url 'board:board_feed' %}" class="icon-link">
+                <i class="fas fa-home"></i>
+                </a>
+            </div>
             <div class="footer__item"><i class="fas fa-search"></i></div>
             <div class="footer__item"><i class="far fa-plus-square"></i></div>
-            <div class="footer__item"><i class="far fa-heart"></i></div>
+            <div class="footer__item">
+                <a href="{% url 'board:board_list' %}" class="icon-link">
+                    <i class="fas fa-user"></i>
+                </a> 
+            </div>
         </div>
     </footer>
 </body>

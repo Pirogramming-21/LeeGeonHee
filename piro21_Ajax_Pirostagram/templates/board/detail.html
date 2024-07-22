@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="main-container">
+        <div class="card board__container board-id-{{ board.id }}">
+            <div class="card-body">
+                <div class="board__img">
+                    {% if board.image %}
+                    <img src="{{ board.image.url }}" alt="Board Image">
+                    {% endif %}
+                </div>
+                <div class="card-text">{{ board.content }}</div>
+                <div class="btn btn-primary board__like" onclick="onClickLike({{board.id}}, 'like')">Likes: {{ board.like }}</div>
+                <div class="card-date">{{ board.create_date }}</div>
+            </div>
+            <form action="{% url 'reply:reply_create' board.id %}"  method="post"  id="replyForm">
+                {% csrf_token %}
+                {{ replyForm.as_p }}
+                <button type="submit">댓글 달기</button>
+            </form>
+            <div id="replyList">
+            {% if board.reply_set %}
+                {% for reply in board.reply_set.all %}
+                    <p>{{reply.contents}}</p>
+                {% endfor %}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block extra %}
+<script>
+    const requestLike = new XMLHttpRequest();
+    const onClickLike = (id) => {
+        const url = '/like_ajax/';
+        requestLike.open('POST', url, true);
+        requestLike.setRequestHeader(
+            'Content-Type',
+            'application/x-www-form-urlencoded'
+        );
+        requestLike.send(JSON.stringify({id:id}));
+    }
+    requestLike.onreadystatechange = () => {
+        if(requestLike.readyState === XMLHttpRequest.DONE) {
+            if (requestLike.status < 400) {
+                const {id} = JSON.parse(requestLike.response);
+                const element = document.querySelector(`.board-id-${id} .board__like`);
+                const originHTML = element.innerHTML;
+                const [buttonType, num] = originHTML.split(" ");
+                const count = Number(num)  + 1;
+
+                element.innerHTML = `Likes ${count}`;
+            }
+        }
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const replyForm = document.getElementById('replyForm');
+        const replyList = document.getElementById('replyList');
+            replyForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                
+                const addcomment = new XMLHttpRequest();
+                addcomment.open('POST', replyForm.action, true);
+                addcomment.setRequestHeader('X-CSRFToken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+                addcomment.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                
+                addcomment.onload = function() {
+                    if (addcomment.status === 200) {
+                        const response = JSON.parse(addcomment.responseText);
+                        if (replyList) {
+                            const newReply = document.createElement('p');
+                            newReply.textContent = response.content;
+                            replyList.appendChild(newReply);
+                            replyForm.reset();
+                        } else {
+                            console.error('Reply list element not found');
+                        }
+                    } else {
+                        console.error('Error:', addcomment.status);
+                    }
+                };
+                
+                const formData = new FormData(replyForm);
+                addcomment.send(new URLSearchParams(formData));
+            });
+    });
+</script>
+
+{% endblock %}

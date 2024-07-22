@@ -5,6 +5,6 @@ from django.utils import timezone
 class Board(models.Model):
     image = models.ImageField(upload_to='board/%Y%m%d', null=True)
     content = models.TextField(max_length=200)
-    like = models.IntegerField()
+    like = models.IntegerField(default=0)
     create_date = models.DateTimeField(default=timezone.now)
     

@@ -6,16 +6,15 @@
         <div class="board-grid">
         {% for board in boards %}
         <div class="card board__container board-id-{{ board.id }}">
-            <div class="card-body">
-                <div class="board__img">
-                    {% if board.image %}
-                    <img src="{{ board.image.url }}" alt="Board Image">
-                    {% endif %}
+            <a href="{% url 'board:board_detail' board.id %}">
+                <div class="card-body">
+                    <div class="board__img">
+                        {% if board.image %}
+                        <img src="{{ board.image.url }}" alt="Board Image">
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="card-text">{{ board.content }}</div>
-                <div class="btn btn-primary board__like" onclick="onClickLike({{board.id}}, 'like')">Likes: {{ board.like }}</div>
-                <div class="card-date">{{ board.create_date }}</div>
-            </div>
+            </a>
         </div>
         {% endfor %}
         </div>
